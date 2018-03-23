@@ -1,6 +1,8 @@
 language: node_js
-
 install: true
 script: true
 after_success:
-  - scp -i "se234.pem" -r html/* ubuntu@54.255.174.42:/var/www/html/ 
+- scp -i "se234.pem" -r html/* ubuntu@54.255.174.42:/var/www/html/
+env:
+  global:
+    secure: cB7AxryLjApOaXvFuYhcFTc/p8R6ATavSTS/O9O6PeqgSUue299308Xf26tzYemmY45+oJyh/QQhBIzoDWagOImcr3p5SreJWgtLRu0l0L1xLmGWlnzC+XryIlkSejQ/HEPO1E9wpKRYQKhM//qXuxS/ubGOqsRLYeK3NWo93z6mnZ5sNMOXHJcHnePRuhw4LHaQMtdOYylA3g3AtomFErsz4dnIeYsI8+kWvcEQ42k5MdLFkL2WP/IaKtXmTzFNTTuzCbfUk+rjhtbTmQTLU/XgoXVLNIevbKoKIIxpj3TvFX1rxBFOFglpJHhniSh2We0d0ABkHFyUh8shFk2QVNUY+vJNOIEiWxkWKJjbT3Lmej3uZ7109NpL9kaI6Fb2O6XbwlsJuBUJZhCpQJ6kmYhq2fOfHSHkdOUhjEAOlwsUA598snbfcVkt/zO5wIEK5n4acEMsZ/6AeMhV8FG8zfyg316nWlSaFr0TaBj2LA+0OirKVzTwEX7306brk5fmkfbZpJQkqnvsC9yiPl7nvel4eIAYiajBD/8I/VTuUAn6SKlhUbQf6qcaWgk4xSWLcQtqsJYNm1amohcy4X9s+8MSxR+1No9AnnO6Fbi4D9isWxng0MOGY2FgBGHKF2Qvbbbt6jIVHXRT8/nycBxj+SfXxtWrh5L5wiIZw6ML5kA=

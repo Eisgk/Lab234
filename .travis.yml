@@ -1,17 +1,15 @@
 language: node_js
-before_insatall:
-    - openssl aes-256-cbc -K "$super_secret_password" -in se234.pem.enc -out se234.pem -d
-    - sudo chmod 400 se234.pem
+sudo: required
+before_install:
+- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 install: true
-script: true
+before_script:
+- export DOCKER_HOST="$HOST_NAME"
+script:
+- docker build -t $DOCKER_USERNAME/htmltest .
+- docker push $DOCKER_USERNAME/htmltest
 after_success:
-- ls -l
-- scp -i "se234.pem" -r html/* ubuntu@54.186.240.231:/var/www/html/
-env:
-  global:
-    secure: cB7AxryLjApOaXvFuYhcFTc/p8R6ATavSTS/O9O6PeqgSUue299308Xf26tzYemmY45+oJyh/QQhBIzoDWagOImcr3p5SreJWgtLRu0l0L1xLmGWlnzC+XryIlkSejQ/HEPO1E9wpKRYQKhM//qXuxS/ubGOqsRLYeK3NWo93z6mnZ5sNMOXHJcHnePRuhw4LHaQMtdOYylA3g3AtomFErsz4dnIeYsI8+kWvcEQ42k5MdLFkL2WP/IaKtXmTzFNTTuzCbfUk+rjhtbTmQTLU/XgoXVLNIevbKoKIIxpj3TvFX1rxBFOFglpJHhniSh2We0d0ABkHFyUh8shFk2QVNUY+vJNOIEiWxkWKJjbT3Lmej3uZ7109NpL9kaI6Fb2O6XbwlsJuBUJZhCpQJ6kmYhq2fOfHSHkdOUhjEAOlwsUA598snbfcVkt/zO5wIEK5n4acEMsZ/6AeMhV8FG8zfyg316nWlSaFr0TaBj2LA+0OirKVzTwEX7306brk5fmkfbZpJQkqnvsC9yiPl7nvel4eIAYiajBD/8I/VTuUAn6SKlhUbQf6qcaWgk4xSWLcQtqsJYNm1amohcy4X9s+8MSxR+1No9AnnO6Fbi4D9isWxng0MOGY2FgBGHKF2Qvbbbt6jIVHXRT8/nycBxj+SfXxtWrh5L5wiIZw6ML5kA=
-before_insatall:
-    - openssl aes-256-cbc -k "$super_secret_password" -in se234.pem.enc -out se234.pem -d
-addons:
-    ssh_known_hosts:
-    - 54.186.240.231
+- docker stop htmltest
+- docker rm htmltest
+- docker run -p 8088:80 -d --name htmltest $DOCKER_USERNAME/htmltest:latest
+service: docker
